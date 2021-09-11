@@ -60,3 +60,10 @@ ls /run/nvidia/driver/
 ```
 sudo docker run -it --rm --gpus all --name="ubuntu" ubuntu:20.04
 ```
+
+
+# 6. Install containerized peer-mem driver
+```
+sudo docker build -t nv-peer-mem --build-arg D_BASE_IMAGE=ubuntu:20.04 --build-arg D_NV_PEER_MEM_BRANCH=1.0-9 gpu-direct/ubuntu/
+sudo docker run --rm -it -v /run/mellanox/drivers:/run/mellanox/drivers -v /run/nvidia/driver:/run/nvidia/drivers --privileged nv-peer-mem
+```
