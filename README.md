@@ -58,17 +58,15 @@ lsmod |grep -i ib
 
 # 4. Install containerized Nvidia-driver
 ```
-sudo docker pull nvcr.io/nvidia/driver:470.57.02-ubuntu20.04
-sudo docker run --name nvidia-driver -d --privileged --pid=host   -v /run/nvidia:/run/nvidia:shared   -v /var/log:/var/log   --restart=unless-stopped   nvcr.io/nvidia/driver:470.57.02-ubuntu20.04
-lsmod |grep -i nvidia
 #vi /etc/nvidia-container-runtime/config.toml
 sudo sed -i 's/^#root/root/' /etc/nvidia-container-runtime/config.toml
 sudo tee /etc/modules-load.d/ipmi.conf <<< "ipmi_msghandler"   && sudo tee /etc/modprobe.d/blacklist-nouveau.conf <<< "blacklist nouveau"   && sudo tee -a /etc/modprobe.d/blacklist-nouveau.conf <<< "options nouveau modeset=0"
 sudo update-initramfs -u
 sudo reboot
+sudo docker pull nvcr.io/nvidia/driver:470.57.02-ubuntu20.04
 sudo docker run --name nvidia-driver -d --privileged --pid=host   -v /run/nvidia:/run/nvidia:shared   -v /var/log:/var/log   --restart=unless-stopped   nvcr.io/nvidia/driver:470.57.02-ubuntu20.04
-lsmod |grep -i nvidia
 sudo docker logs -f nvidia-driver
+lsmod |grep -i nvidia
 ls /run/nvidia/driver/
 ```
 
