@@ -43,6 +43,13 @@ sudo systemctl restart docker
 sudo apt-get install -y git
 git clone https://github.com/Mellanox/ofed-docker.git
 cd ofed-docker/
+vi ubuntu/Docerfile
+~~~~~~~~~~
+#   apt-get -yq install curl perl && \
+    apt-get -yq install curl perl libcap2 && \
+#   /root/${D_OFED_PATH}/mlnxofedinstall --without-fw-update --kernel-only --force ${D_WITHOUT_FLAGS} && \
+    /root/${D_OFED_PATH}/mlnxofedinstall --with-nfsrdma --with-nvmf --enable-gds --force && \
+~~~~~~~~~~
 sudo docker build -t ofed-driver --build-arg D_BASE_IMAGE=ubuntu:20.04 --build-arg D_OFED_VERSION=5.3-1.0.0.1 --build-arg D_OS=ubuntu20.04 --build-arg D_ARCH=x86_64 ubuntu/
 sudo docker images
 sudo docker run --rm -itd -v /run/mellanox/drivers:/run/mellanox/drivers:shared -v /etc/network:/etc/network -v /host/etc:/host/etc -v /host/lib/udev:/lib/udev --net=host --privileged ofed-driver
