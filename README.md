@@ -21,17 +21,15 @@ shutdown -h now
 ```
 sudo apt-get install curl
 curl https://get.docker.com | sh && sudo systemctl --now enable docker
-sudo su
-cp /lib/systemd/system/docker.service /etc/systemd/system/
-vi /etc/systemd/system/docker.service 
+sudo cp /lib/systemd/system/docker.service /etc/systemd/system/
+sudo vi /etc/systemd/system/docker.service 
 ~~~~~~~~~~
 # Edit as like below:
 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --data-root /mnt/docker
 #ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ~~~~~~~~~~
-systemctl daemon-reload
-systemctl restart docker
-exit
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
 curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list |   sudo tee /etc/apt/sources.list.d/nvidia-docker.list
