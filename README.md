@@ -56,6 +56,12 @@ sudo docker run --rm -itd -v /run/mellanox/drivers:/run/mellanox/drivers:shared 
 lsmod |grep -i ib
 ```
 
+# 3.1 Test ofed_info in Host Machine
+```
+sudo chroot /run/mellanox/drivers
+ofed_info
+```
+
 # 4. Install containerized Nvidia-driver
 ```
 #vi /etc/nvidia-container-runtime/config.toml
@@ -70,18 +76,18 @@ lsmod |grep -i nvidia
 ls /run/nvidia/driver/
 ```
 
-# 5. Test nvidia-smi in some containers
+# 4.1 Test nvidia-smi in some containers
 ```
 sudo docker run -it --rm --gpus all --name="ubuntu" ubuntu:20.04
 ```
 
-# 5.1 Test nvidia-smi in Host Machine
+# 4.2 Test nvidia-smi in Host Machine
 ```
 sudo chroot /run/nvidia/driver
 nvidia-smi
 ```
 
-# 6. Install containerized peer-mem driver
+# 5. Install containerized peer-mem driver
 ```
 sudo docker build -t nv-peer-mem --build-arg D_BASE_IMAGE=ubuntu:20.04 --build-arg D_NV_PEER_MEM_BRANCH=1.0-9 gpu-direct/ubuntu/
 sudo docker run --rm -it -v /run/mellanox/drivers:/run/mellanox/drivers -v /run/nvidia/driver:/run/nvidia/drivers --privileged nv-peer-mem
