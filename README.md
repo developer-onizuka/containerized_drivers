@@ -75,6 +75,11 @@ ls /run/nvidia/driver/
 sudo docker run -it --rm --gpus all --name="ubuntu" ubuntu:20.04
 ```
 
+# 5.1 Test nvidia-smi in Host Machine
+```
+sudo chroot /run/nvidia/driver
+nvidia-smi
+```
 
 # 6. Install containerized peer-mem driver
 ```
